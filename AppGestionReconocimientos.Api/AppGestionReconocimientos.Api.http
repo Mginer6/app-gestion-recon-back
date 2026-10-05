@@ -1,0 +1,16 @@
+@host = https://localhost:7095
+
+### Login
+POST {{host}}/api/Auth/login
+Content-Type: application/json
+
+{ "email": "user@admin.es" }
+
+### Listar usuarios
+GET {{host}}/api/Usuario
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIyIiwibmFtZSI6Ik1hcmNvcyIsInJvbGUiOiJBZG1pbmlzdHJhZG9yIiwiZXhwIjoxNzkwNjI0MDE1LCJpc3MiOiJBcHBHZXN0aW9uUmVjb25vY2ltaWVudG9zIiwiYXVkIjoiQXBwR2VzdGlvblJlY29ub2NpbWllbnRvcy5Gcm9udCJ9.o0u8NqRXb8tNlbWCVqN6zgYqnmdq3S2sOKacTrmyq1E
+
+
+### Yo (diagnóstico)
+GET {{host}}/api/Auth/yo
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIyIiwibmFtZSI6Ik1hcmNvcyIsInJvbGUiOiJBZG1pbmlzdHJhZG9yIiwiZXhwIjoxNzkwNjIzOTMyLCJpc3MiOiJBcHBHZXN0aW9uUmVjb25vY2ltaWVudG9zIiwiYXVkIjoiQXBwR2VzdGlvblJlY29ub2NpbWllbnRvcy5Gcm9udCJ9.D9Ccv1ESv8UdD5sr_E7F9pkB8-QH4qpAp4THdyClON0
