@@ -1,0 +1,48 @@
+######################
+# Do NOT delete this commented lines
+# CI base pipeline - Generic
+# Maintainers: jayelamos@hiberus.com, idelamata@mitma.es
+# Version: 4.0.0
+######################
+
+#trigger: none
+
+#Comment "trigger: none" and uncomment next section for auto pipeline execution whenever you push an update to the specified branches
+#Be careful, do NOT uncomment main branch if you do NOT want automatic deployment in production
+
+trigger:
+  branches:
+    include:
+#    #- main
+    - develop
+#    #- release/*
+
+pool: 'MITMA ubuntu'
+
+resources:
+  repositories:
+  - repository: templates
+    type: git
+    name: 'K8S.info/K8S.info'
+    ref: feature/versionado-automatico-rc2
+
+extends:
+  template: pipelines/tpl_docker_build_push.yml@templates
+  parameters:
+    #If necessary, the following parameters can be specified:
+    #dockerfile: #dockerfile path
+    #versionFile: #source file with application version
+    #appVersion: #alternative: application version
+    #imageSuffix: # Example: "-test" #It is required when using the gitopsdir parameter in the CI and CD pipeline
+    #buildContext: #docker build context
+    ${{ if eq(variables['Build.SourceBranchName'], 'develop') }}:
+      environment: "CERTI"
+    ${{ if startsWith(variables['Build.SourceBranch'], 'refs/heads/release') }}:
+      environment: "PRE"
+    ${{ if eq(variables['Build.SourceBranchName'], 'main') }}:
+      environment: "PRO"
+    #systemAccessToken: false
+    #addSecretsDockerBuild: false
+    #secretList:
+    #- SECRET1
+    #- SECRETN

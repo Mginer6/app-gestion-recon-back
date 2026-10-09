@@ -1,0 +1,10 @@
+**/bin/
+**/obj/
+**/.vs/
+.git
+**/*.user
+**/appsettings.Development.json
+**/*.pfx
+**/*.key
+Dockerfile
+.dockerignore

@@ -1,0 +1,44 @@
+######################
+# Do NOT delete this commented lines
+# CD base pipeline - Generic
+# Maintainers: jayelamos@hiberus.com, idelamata@mitma.es
+# Version: 4.0.0
+######################
+
+trigger: none
+
+pool: 'MITMA ubuntu'
+
+variables:
+  - name: environment
+    ${{ if eq(variables['Build.SourceBranchName'], 'develop') }}:
+      value: certi
+    ${{ if startsWith(variables['Build.SourceBranch'], 'refs/heads/release') }}:
+      value: pre
+    ${{ if eq(variables['Build.SourceBranchName'], 'main') }}:
+      value: pro
+  # This is allowed as an extra variable if the path VERSION file is different
+  #- name: version_file_path
+  #  value: example/VERSION
+
+resources:
+  pipelines:
+  # This pipeline refers to the name of the pipeline created on Azure DevOps
+  # that does the CI part, build and push of the Docker image
+  - pipeline: versionado-CI   # Nombre del pipeline de CI del back
+    source: versionado-CI     # Nombre del pipeline de CI del back
+    trigger: true
+  repositories:
+  - repository: utils
+    type: git
+    name: K8S.pipelines/K8S.PipelineTemplates
+    ref: feature/versionado-automatico-rc2
+
+stages:
+  - stage: CD
+    displayName: Preparacion manifiestos para CD
+    jobs:
+    - template: templates/cd_helm.yaml@utils
+      #If necessary, the following parameters can be specified:
+      #parameters:
+        #specific_gitopsdir: #It is required when using a different GitOps repo 

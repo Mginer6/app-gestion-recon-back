@@ -20,7 +20,7 @@ namespace AppGestionReconocimientos.Api.Controllers
 
 
         [HttpGet]
-        [Authorize(Roles = Roles.Administrador)]
+        //[Authorize(Roles = Roles.Administrador)]
         public async Task<IActionResult> ObtenerUsuarios()
         {
             var usuarios = await _context.Usuarios.ToListAsync();
